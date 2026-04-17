@@ -19,8 +19,9 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen bg-background font-sans antialiased text-foreground`}>
         <div className="border-b border-[var(--color-gdg-grey-200)] bg-background">
           <div className="container mx-auto flex h-16 items-center px-4">
-            <div className="flex items-center space-x-2 font-bold text-xl">
-              GDG Talk Admin
+            <div className="flex items-center space-x-3 font-bold text-xl">
+              <img src="/assets/GDG Brackets removed background.png" alt="GDG Brackets" className="h-8 w-auto object-contain" />
+              <span>GDG Talk Admin</span>
             </div>
           </div>
         </div>

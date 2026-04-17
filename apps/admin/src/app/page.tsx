@@ -87,7 +87,7 @@ export default function AdminPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold">Speaker *</label>
-            <input name="speaker" required className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] focus:border-[var(--color-gdg-blue)] focus:ring-1 focus:ring-[var(--color-gdg-blue)] outline-none transition-all" placeholder="z.B. Lennart Kosova" />
+            <input name="speaker" required className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] focus:border-[var(--color-gdg-blue)] focus:ring-1 focus:ring-[var(--color-gdg-blue)] outline-none transition-all" placeholder="z.B. Max Mustermann" />
           </div>
         </div>
 
@@ -127,7 +127,11 @@ export default function AdminPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold">Event Art</label>
-            <input name="event" required className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] outline-none transition-all focus:border-[var(--color-gdg-blue)]" placeholder="z.B. GDG Official" />
+            <select name="event" className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] outline-none bg-white focus:border-[var(--color-gdg-blue)]">
+              <option value="GDG Official">GDG Official</option>
+              <option value="GDG Supported">GDG Supported</option>
+              <option value="Extern">Extern</option>
+            </select>
           </div>
         </div>
 
