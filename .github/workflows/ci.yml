@@ -1,10 +1,20 @@
-name: E2E Playwright Tests
+name: E2E Playwright Tests & Deploy Pages
 
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+# Permissions required for GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   test:
@@ -23,6 +33,12 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Setup Pages
+      if: github.ref == 'refs/heads/main'
+      uses: actions/configure-pages@v5
+      with:
+        static_site_generator: next
+
     - name: Build Web App
       run: npm run build --workspace=apps/web
 
@@ -40,3 +56,22 @@ jobs:
         name: playwright-report
         path: apps/web/playwright-report/
         retention-days: 14
+
+    - name: Upload artifact for GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./apps/web/out
+
+  deploy:
+    # Only run the deploy job if it's the main branch
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
