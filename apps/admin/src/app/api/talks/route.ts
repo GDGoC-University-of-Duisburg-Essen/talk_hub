@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     const level = formData.get("level") as string;
     const event = formData.get("event") as string;
     const date = formData.get("date") as string;
+    const registrationUrlRaw = formData.get("registrationUrl") as string | null;
     const description = formData.get("description") as string;
     
     const file = formData.get("file") as File;
@@ -27,6 +28,7 @@ export async function POST(req: Request) {
     }
 
     const tags = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
+    const registrationUrl = registrationUrlRaw?.trim();
 
     const meta = {
       title,
@@ -37,7 +39,8 @@ export async function POST(req: Request) {
       level,
       event,
       date,
-      description
+      description,
+      ...(registrationUrl ? { registrationUrl } : {})
     };
 
     // Sanitize title for folder name

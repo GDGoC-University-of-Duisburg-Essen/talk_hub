@@ -141,6 +141,16 @@ export default function AdminPage() {
         </div>
 
         <div className="space-y-2">
+          <label className="text-sm font-semibold">Anmeldelink</label>
+          <input
+            name="registrationUrl"
+            type="url"
+            className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] outline-none transition-all focus:border-[var(--color-gdg-blue)]"
+            placeholder="https://gdg.community.dev/..."
+          />
+        </div>
+
+        <div className="space-y-2">
           <label className="text-sm font-semibold">Beschreibung</label>
           <textarea name="description" rows={3} className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] outline-none transition-all focus:border-[var(--color-gdg-blue)]" placeholder="Kurze Beschreibung des Vortrages..."></textarea>
         </div>
