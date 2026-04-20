@@ -7,7 +7,7 @@ import { Header } from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GDG Talk Hub",
+  title: "GDG Talk Hub - Universität Duisburg-Essen",
   description: "Presentations and Talks from GDG on Campus",
 };
 

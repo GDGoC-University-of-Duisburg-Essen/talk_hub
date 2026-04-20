@@ -43,17 +43,28 @@ export function Header() {
           )}
         </Link>
 
-        <button
-          onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-          className="inline-flex items-center justify-center rounded-md p-2 hover:bg-card focus:outline-none"
-        >
-          <span className="sr-only">Toggle theme</span>
-          {mounted ? (
-            resolvedTheme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
-          ) : (
-            <div className="h-5 w-5" />
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://gdg.community.dev/gdg-on-campus-university-of-duisburg-essen-essen-germany/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-card focus:outline-none"
+          >
+            GDG Official
+          </a>
+
+          <button
+            onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
+            className="inline-flex items-center justify-center rounded-md p-2 hover:bg-card focus:outline-none"
+          >
+            <span className="sr-only">Toggle theme</span>
+            {mounted ? (
+              resolvedTheme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+            ) : (
+              <div className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
     </header>
   );
