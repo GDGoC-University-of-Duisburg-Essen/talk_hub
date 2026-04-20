@@ -9,6 +9,7 @@ export interface TalkMetadata {
   event: string;
   date: string;
   description: string;
+  registrationUrl?: string;
 }
 
 export const GDG_COLORS = {
