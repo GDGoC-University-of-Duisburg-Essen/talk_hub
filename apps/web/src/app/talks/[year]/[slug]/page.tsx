@@ -1,6 +1,6 @@
 import { getTalks } from "@/lib/talks";
 import Link from "next/link";
-import { ArrowLeft, Download, Calendar, Tag, User, ExternalLink } from "lucide-react";
+import { ArrowLeft, Download, Calendar, Tag, User, ExternalLink, Languages } from "lucide-react";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -25,6 +25,15 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
   const talkDate = new Date(talk.date);
   talkDate.setHours(0, 0, 0, 0);
   const isPendingTalk = talkDate.getTime() >= today.getTime();
+
+  const normalizedLanguage = talk.language?.toUpperCase();
+  const languageMeta: Record<string, { label: string; flag: string }> = {
+    DE: { label: "Deutsch", flag: "🇩🇪" },
+    EN: { label: "English", flag: "🇬🇧" },
+  };
+  const languageInfo = normalizedLanguage ? languageMeta[normalizedLanguage] : undefined;
+  const languageLabel = languageInfo?.label ?? talk.language;
+  const languageFlag = languageInfo?.flag;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -56,10 +65,30 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
                   {new Date(talk.date).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </div>
                 <div className="flex items-center">
+                  <Languages className="w-4 h-4 mr-1.5" />
+                  <span className="inline-flex items-center gap-1">
+                    {languageFlag && <span aria-hidden="true">{languageFlag}</span>}
+                    <span>{languageLabel}</span>
+                  </span>
+                </div>
+                <div className="flex items-center">
                   <Tag className="w-4 h-4 mr-1.5" />
                   {talk.event}
                 </div>
              </div>
+
+             {talk.tags?.length > 0 && (
+               <div className="mt-4 flex flex-wrap items-center gap-2">
+                 {talk.tags.map((tag) => (
+                   <span
+                     key={tag}
+                     className="inline-flex items-center rounded-full border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-700)] bg-background px-2.5 py-1 text-xs font-medium text-muted"
+                   >
+                     #{tag}
+                   </span>
+                 ))}
+               </div>
+             )}
            </div>
            
            {talk.pdfPath && (
