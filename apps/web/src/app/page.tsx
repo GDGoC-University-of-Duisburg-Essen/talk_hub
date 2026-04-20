@@ -17,7 +17,7 @@ export default function Home() {
           Hub
         </h1>
         <p className="text-xl text-muted max-w-2xl">
-          Entdecke Präsentationen und Vorträge von unseren GDG on Campus Events.
+          Entdecke Präsentationen und Vorträge von unseren GDG on Campus an der Universität Duisburg-Essen.
         </p>
       </div>
       
