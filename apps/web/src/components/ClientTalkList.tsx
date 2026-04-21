@@ -167,7 +167,7 @@ export function ClientTalkList({ talks, availableTags }: { talks: TalkWithSlug[]
                           <div className="flex justify-between items-start mb-2 gap-2">
                             <span className="text-xs font-semibold text-[var(--color-gdg-blue)] uppercase tracking-wider">{talk.category}</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500 text-white uppercase tracking-wide">Pending</span>
+                              <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-amber-500 text-white uppercase tracking-wide">Ausstehend</span>
                               <span className="text-xs text-muted">{talk.language}</span>
                             </div>
                           </div>
