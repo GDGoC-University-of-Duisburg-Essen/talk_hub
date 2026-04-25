@@ -19,16 +19,14 @@ export default function AdminPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!file) {
-      setError("Bitte wähle eine PDF-Datei aus.");
-      return;
-    }
 
     setIsSubmitting(true);
     setError("");
 
     const formData = new FormData(e.currentTarget);
-    formData.append("file", file);
+    if (file) {
+      formData.append("file", file);
+    }
 
     try {
       const res = await fetch("/api/talks", {
@@ -140,7 +138,7 @@ export default function AdminPage() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold">Präsentationsfolien (PDF) *</label>
+          <label className="text-sm font-semibold">Präsentationsfolien (PDF)</label>
           <div
             {...getRootProps()}
             className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors ${isDragActive ? 'border-[var(--color-gdg-blue)] bg-blue-50' : 'border-[var(--color-gdg-grey-300)] hover:bg-[var(--color-gdg-grey-50)]'

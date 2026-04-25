@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     
     const file = formData.get("file") as File;
 
-    if (!title || !file) {
+    if (!title) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
@@ -57,10 +57,12 @@ export async function POST(req: Request) {
     );
 
     // Save PDF
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const pdfPath = path.join(targetDir, file.name);
-    await fs.writeFile(pdfPath, buffer);
+    if (file) {
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      const pdfPath = path.join(targetDir, file.name);
+      await fs.writeFile(pdfPath, buffer);
+    }
 
     return NextResponse.json({ success: true, folder: sanitizedTitle });
   } catch (err: any) {
