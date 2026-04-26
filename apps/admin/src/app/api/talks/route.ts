@@ -5,6 +5,44 @@ import { TalkMetadata } from "@gdg/ui-theme";
 
 const TALKS_DIR = path.join(process.cwd(), "../../talks");
 
+export async function GET() {
+  try {
+    const talks: any[] = [];
+    const years = await fs.readdir(TALKS_DIR).catch(() => []);
+    
+    for (const year of years) {
+      if (!/^\d{4}$/.test(year)) continue;
+      const yearDir = path.join(TALKS_DIR, year);
+      const stat = await fs.stat(yearDir);
+      if (!stat.isDirectory()) continue;
+      
+      const folders = await fs.readdir(yearDir).catch(() => []);
+      for (const folder of folders) {
+        const talkDir = path.join(yearDir, folder);
+        const folderStat = await fs.stat(talkDir);
+        if (!folderStat.isDirectory()) continue;
+        
+        try {
+          const metaContent = await fs.readFile(path.join(talkDir, "meta.json"), "utf8");
+          const meta = JSON.parse(metaContent);
+          talks.push({
+            slug: folder,
+            year,
+            ...meta
+          });
+        } catch (e) {
+          // ignore missing or malformed meta.json
+        }
+      }
+    }
+    
+    talks.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return NextResponse.json(talks);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
@@ -21,6 +59,9 @@ export async function POST(req: Request) {
     const description = formData.get("description") as string;
     const eventLink = formData.get("eventLink") as string;
     
+    const originalSlug = formData.get("originalSlug") as string;
+    const originalYear = formData.get("originalYear") as string;
+
     const file = formData.get("file") as File;
 
     if (!title) {
@@ -49,6 +90,19 @@ export async function POST(req: Request) {
 
     const targetDir = path.join(TALKS_DIR, year, sanitizedTitle);
     
+    if (originalSlug && originalYear) {
+      const originalDir = path.join(TALKS_DIR, originalYear, originalSlug);
+      if (originalDir !== targetDir) {
+        try {
+          await fs.stat(originalDir);
+          await fs.mkdir(path.join(TALKS_DIR, year), { recursive: true });
+          await fs.rename(originalDir, targetDir);
+        } catch (e) {
+          // Do nothing if original dir doesn't exist
+        }
+      }
+    }
+
     // Create directory
     await fs.mkdir(targetDir, { recursive: true });
     
