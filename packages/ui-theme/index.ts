@@ -1,7 +1,6 @@
 export interface TalkMetadata {
   title: string;
   speaker: string;
-  year: number;
   category: string;
   tags: string[];
   language: string;

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { TalkMetadata } from "@gdg/ui-theme";
 
 const TALKS_DIR = path.join(process.cwd(), "../../talks");
 
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
 
     const tags = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
 
-    const meta = {
+    const meta: TalkMetadata = {
       title,
       speaker,
       category,

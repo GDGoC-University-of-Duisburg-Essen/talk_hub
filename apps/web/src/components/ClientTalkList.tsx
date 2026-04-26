@@ -49,8 +49,9 @@ export function ClientTalkList({ talks, availableTags }: { talks: TalkWithSlug[]
   const groupedByYear = useMemo(() => {
     const groups: Record<number, TalkWithSlug[]> = {};
     for (const talk of nonPendingTalks) {
-      if (!groups[talk.year]) groups[talk.year] = [];
-      groups[talk.year].push(talk);
+      const year = new Date(talk.date).getFullYear();
+      if (!groups[year]) groups[year] = [];
+      groups[year].push(talk);
     }
     return groups;
   }, [nonPendingTalks]);
@@ -159,7 +160,7 @@ function TalkCard({ talk, isPending }: { talk: TalkWithSlug, isPending: boolean 
   return (
     <Link
       key={talk.slug}
-      href={`/talks/${talk.year}/${talk.slug}`}
+      href={`/talks/${new Date(talk.date).getFullYear()}/${talk.slug}`}
       className="block group h-full"
     >
       <div className="h-full rounded-xl border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow group-hover:border-[var(--color-gdg-blue)] flex flex-col">

@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 export async function generateStaticParams() {
   const talks = getTalks();
   return talks.map((talk) => ({
-    year: talk.year.toString(),
+    year: new Date(talk.date).getFullYear().toString(),
     slug: talk.slug,
   }));
 }
@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 export default async function TalkDetailsPage({ params }: { params: Promise<{ year: string; slug: string }> }) {
   const resolvedParams = await params;
   const talks = getTalks();
-  const talk = talks.find(t => t.year.toString() === resolvedParams.year && t.slug === resolvedParams.slug);
+  const talk = talks.find(t => new Date(t.date).getFullYear().toString() === resolvedParams.year && t.slug === resolvedParams.slug);
 
   if (!talk) {
     notFound();
