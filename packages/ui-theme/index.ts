@@ -1,7 +1,6 @@
 export interface TalkMetadata {
   title: string;
   speaker: string;
-  year: number;
   category: string;
   tags: string[];
   language: string;
@@ -9,6 +8,7 @@ export interface TalkMetadata {
   event: string;
   date: string;
   description: string;
+  eventLink?: string;
 }
 
 export const GDG_COLORS = {
