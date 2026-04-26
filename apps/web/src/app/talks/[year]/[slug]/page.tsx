@@ -74,7 +74,7 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
                   className="relative inline-flex w-full items-center justify-center rounded-full bg-background px-7 py-3 text-sm font-bold text-foreground group-active:scale-[0.98] transition-all"
                 >
                   <ExternalLink className="w-5 h-5 mr-3 text-[var(--color-gdg-blue)] group-hover:-translate-y-0.5 group-hover:scale-110 transition-transform duration-300" />
-                  {talk.language === "EN" ? "Registration" : "Zur Anmeldung"}
+                  Zur Anmeldung
                 </a>
               </div>
             ) : null
@@ -101,7 +101,7 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
                 disabled
                 className="relative inline-flex w-full items-center justify-center rounded-full bg-background px-7 py-3 text-sm font-bold text-muted cursor-not-allowed"
               >
-                {talk.language === "EN" ? "PDF unavailable" : "PDF nicht verfügbar"}
+                PDF nicht verfügbar
               </button>
             </div>
           )}
@@ -116,9 +116,7 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
 
       {isFuture ? (
         <div className="mt-12 bg-card border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] rounded-xl py-16 text-center text-muted">
-          {talk.language === "EN"
-            ? "This talk is upcoming. Presentation slides will be published here after the event."
-            : "Dieser Talk findet in der Zukunft statt. Präsentationsfolien werden nach dem Event hier veröffentlicht."}
+          Dieser Talk findet in der Zukunft statt. Präsentationsfolien werden nach dem Event hier veröffentlicht.
         </div>
       ) : talk.pdfPath ? (
         <div className="mt-12 rounded-xl overflow-hidden border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] bg-card shadow-lg flex flex-col" style={{ height: '75vh' }}>
