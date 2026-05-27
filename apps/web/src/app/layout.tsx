@@ -7,13 +7,15 @@ import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
 export const metadata: Metadata = {
   title: "GDG Talk Hub UDE",
   description: "Presentations and Talks from GDGoC, University of Duisburg-Essen",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    icon: `${basePath}/favicon.png`,
+    shortcut: `${basePath}/favicon.png`,
+    apple: `${basePath}/favicon.png`,
   },
   openGraph: {
     title: "GDG Talk Hub UDE",
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "GDG Talk Hub UDE",
     images: [
       {
-        url: "/og/og-image.png",
+        url: `${basePath}/og/og-image.png`,
         width: 1200,
         height: 630,
         alt: "GDG Talk Hub",
@@ -37,7 +39,7 @@ export const metadata: Metadata = {
     description: "Presentations and Talks from GDGoC, University of Duisburg-Essen",
     images: [
       {
-        url: "/og/og-image.png",
+        url: `${basePath}/og/og-image.png`,
         width: 1200,
         height: 630,
         alt: "GDG Talk Hub",
