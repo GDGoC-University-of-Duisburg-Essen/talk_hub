@@ -5,34 +5,38 @@ export function Footer() {
     <footer className="">
       <div className="container mx-auto flex flex-col gap-2 px-4 py-5 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p></p>
-        <nav className="flex items-center gap-4" aria-label="Rechtliche Links">
-          <Link href="/directions" className="hover:text-foreground transition-colors">
-            Anfahrt
-          </Link>
-          <Link href="/impress" className="hover:text-foreground transition-colors">
-            Impressum
-          </Link>
-          <Link href="/privacy" className="hover:text-foreground transition-colors">
-            Datenschutz
-          </Link>
-          <a
-            href="https://fie-due.de/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
-          >
-            Fachschaft
-            <ExternalLinkIcon />
-          </a>
-          <a
-            href="https://github.com/GDGoC-University-of-Duisburg-Essen/talk_hub"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
-          >
-            GitHub
-            <ExternalLinkIcon />
-          </a>
+        <nav className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4" aria-label="Rechtliche Links">
+          <div className="flex flex-row items-center justify-center gap-4">
+            <Link href="/directions" className="hover:text-foreground transition-colors">
+              Anfahrt
+            </Link>
+            <Link href="/impress" className="hover:text-foreground transition-colors">
+              Impressum
+            </Link>
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
+              Datenschutz
+            </Link>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-4">
+            <a
+              href="https://fie-due.de/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+            >
+              Fachschaft
+              <ExternalLinkIcon />
+            </a>
+            <a
+              href="https://github.com/GDGoC-University-of-Duisburg-Essen/talk_hub"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
+            >
+              GitHub
+              <ExternalLinkIcon />
+            </a>
+          </div>
         </nav>
         <p></p>
       </div>
