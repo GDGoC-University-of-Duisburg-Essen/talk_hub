@@ -1,5 +1,5 @@
 import { Bike, CarFront, MapPin, Train } from "lucide-react";
-import Image from "next/image";
+
 
 export default function DirectionsPage() {
   return (
@@ -20,7 +20,7 @@ export default function DirectionsPage() {
           <p className="mt-3">Das Gebäude SH liegt direkt an der Schützenbahn und ist an der braunen Fassade mit gelben Fenstern erkennbar.</p>
         </div>
 
-        <Image src="/assets/sh_eingang.png" alt="Lageplan der Universität Essen mit Markierung des Gebäudes SH" width={771} height={339} />
+        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/assets/sh_eingang.png`} alt="Lageplan der Universität Essen mit Markierung des Gebäudes SH" width={771} height={339} className="rounded-md" />
 
         <div>
           <h2 className="mb-2 text-xl font-semibold text-foreground flex items-center">
