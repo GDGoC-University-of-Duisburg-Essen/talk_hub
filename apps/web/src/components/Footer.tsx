@@ -6,6 +6,9 @@ export function Footer() {
       <div className="container mx-auto flex flex-col gap-2 px-4 py-5 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p></p>
         <nav className="flex items-center gap-4" aria-label="Rechtliche Links">
+          <Link href="/directions" className="hover:text-foreground transition-colors">
+            Anfahrt
+          </Link>
           <Link href="/impress" className="hover:text-foreground transition-colors">
             Impressum
           </Link>
