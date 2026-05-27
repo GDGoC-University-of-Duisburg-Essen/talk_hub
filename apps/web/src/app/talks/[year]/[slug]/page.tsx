@@ -128,25 +128,26 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
             className="w-full flex-1 border-0 hidden md:block"
             title="Präsentationsfolien Preview"
           />
-          {process.env.NEXT_PUBLIC_GITHUB_URL ? (
-            <iframe
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_GITHUB_URL}${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}`)}&embedded=true`}
-              className="w-full flex-1 border-0 block md:hidden bg-white"
-              title="Präsentationsfolien Mobile Preview"
-            />
-          ) : (
-            <div className="md:hidden flex-1 flex flex-col items-center justify-center p-8 text-center bg-[var(--color-gdg-grey-50)] dark:bg-[var(--color-gdg-grey-900)]">
-              <p className="mb-4 text-muted text-sm">Die mobile Live-Vorschau für PDFs wird lokal nicht unterstützt (nur Online in GitHub Pages). Bitte öffne die PDF direkt:</p>
-              <a
-                href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--color-gdg-blue)] underline font-medium text-sm"
-              >
-                PDF hier im Vollbild öffnen
-              </a>
-            </div>
-          )}
+          <div className="md:hidden flex-1 bg-white">
+            <object
+              data={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}#toolbar=1&navpanes=0&scrollbar=1`}
+              type="application/pdf"
+              className="w-full h-full border-0"
+              aria-label="Präsentationsfolien Mobile Preview"
+            >
+              <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[var(--color-gdg-grey-50)] dark:bg-[var(--color-gdg-grey-900)]">
+                <p className="mb-4 text-muted text-sm">Die mobile Vorschau wird von diesem Browser nicht unterstützt. Bitte öffne die PDF direkt:</p>
+                <a
+                  href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--color-gdg-blue)] underline font-medium text-sm"
+                >
+                  PDF hier im Vollbild öffnen
+                </a>
+              </div>
+            </object>
+          </div>
         </div>
       ) : (
         <div className="mt-12 bg-card border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] rounded-xl py-16 text-center text-muted">
