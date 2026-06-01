@@ -20,19 +20,23 @@ interface PdfViewerProps {
 }
 
 export function PdfViewer({ pdfUrl }: PdfViewerProps) {
-  const [isAndroid, setIsAndroid] = useState<boolean | null>(null);
+  const [needsCustomViewer, setNeedsCustomViewer] = useState<boolean | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (typeof window !== "undefined") {
-        setIsAndroid(/android/i.test(navigator.userAgent.toLowerCase()));
+        const isAndroidDevice = /android/i.test(navigator.userAgent.toLowerCase());
+        const lacksPdfPlugin = 'pdfViewerEnabled' in navigator && navigator.pdfViewerEnabled === false;
+        
+        // If it's an Android device OR the browser explicitly says it doesn't support PDFs inline
+        setNeedsCustomViewer(isAndroidDevice || lacksPdfPlugin);
       }
     }, 0);
     return () => clearTimeout(timer);
   }, []);
 
   // Show a simple loading state while checking the user agent
-  if (isAndroid === null) {
+  if (needsCustomViewer === null) {
     return (
       <div className="flex-1 flex items-center justify-center bg-white dark:bg-[var(--color-gdg-grey-900)] h-[500px] min-h-[300px]">
         <Loader2 className="w-8 h-8 text-[var(--color-gdg-blue)] animate-spin" />
@@ -40,7 +44,7 @@ export function PdfViewer({ pdfUrl }: PdfViewerProps) {
     );
   }
 
-  if (isAndroid) {
+  if (needsCustomViewer) {
     return <AndroidPdfPreview pdfUrl={pdfUrl} />;
   }
 
