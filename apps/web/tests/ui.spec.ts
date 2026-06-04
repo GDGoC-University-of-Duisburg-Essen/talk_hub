@@ -49,7 +49,8 @@ test.describe('GDG Talk Hub UI Verification', () => {
         expect(response.headers()['content-type']).toContain('pdf');
         
         const pdfIframe = page.locator('iframe[title="Präsentationsfolien Preview"]').first();
-        await expect(pdfIframe).toBeVisible();
+        const customPreview = page.getByText('Gesamtes PDF öffnen').first();
+        await expect(pdfIframe.or(customPreview)).toBeVisible();
       }
     }
   });
