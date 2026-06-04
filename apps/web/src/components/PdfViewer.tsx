@@ -20,23 +20,56 @@ interface PdfViewerProps {
 }
 
 export function PdfViewer({ pdfUrl }: PdfViewerProps) {
-  const [needsCustomViewer, setNeedsCustomViewer] = useState<boolean | null>(null);
+  const [viewerType, setViewerType] = useState<'loading' | 'native' | 'custom'>('loading');
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (typeof window !== "undefined") {
-        const isAndroidDevice = /android/i.test(navigator.userAgent.toLowerCase());
-        const lacksPdfPlugin = 'pdfViewerEnabled' in navigator && navigator.pdfViewerEnabled === false;
-        
-        // If it's an Android device OR the browser explicitly says it doesn't support PDFs inline
-        setNeedsCustomViewer(isAndroidDevice || lacksPdfPlugin);
+      if (typeof window === "undefined" || typeof navigator === "undefined") {
+        setViewerType('native');
+        return;
+      }
+
+      try {
+        const ua = navigator.userAgent.toLowerCase();
+        // 1. Moderne API: Überprüft explizit, ob der Browser PDFs nativ anzeigen kann.
+        // Android Chrome liefert hier zuverlässig 'false'.
+        if ('pdfViewerEnabled' in navigator && navigator.pdfViewerEnabled === false) {
+          setViewerType('custom');
+          return;
+        }
+
+        // 2. Client Hints API (sehr zuverlässig in modernen Chromium-Browsern, auch im Desktop-Modus)
+        // @ts-ignore (TypeScript kennt userAgentData noch nicht standardmäßig)
+        if (navigator.userAgentData && navigator.userAgentData.platform === 'Android') {
+          setViewerType('custom');
+          return;
+        }
+
+        // 3. Klassischer User-Agent Fallback
+        if (/android/i.test(ua)) {
+          setViewerType('custom');
+          return;
+        }
+
+        // 4. Platform-Prüfung (falls ein Android-Gerät als Linux-Desktop getarnt ist)
+        const platform = (navigator.platform || '').toLowerCase();
+        if (platform.includes('linux arm') || platform.includes('linux aarch64') || platform.includes('android')) {
+          setViewerType('custom');
+          return;
+        }
+
+        // 5. Standard-Fallback: Nativer Viewer (iOS, Mac, Windows, Linux Desktop)
+        setViewerType('native');
+      } catch (e) {
+        // Bei unerwarteten Sicherheits-Restriktionen des Browsers
+        setViewerType('native');
       }
     }, 0);
+
     return () => clearTimeout(timer);
   }, []);
 
-  // Show a simple loading state while checking the user agent
-  if (needsCustomViewer === null) {
+  if (viewerType === 'loading') {
     return (
       <div className="flex-1 flex items-center justify-center bg-white dark:bg-[var(--color-gdg-grey-900)] h-[500px] min-h-[300px]">
         <Loader2 className="w-8 h-8 text-[var(--color-gdg-blue)] animate-spin" />
@@ -44,7 +77,7 @@ export function PdfViewer({ pdfUrl }: PdfViewerProps) {
     );
   }
 
-  if (needsCustomViewer) {
+  if (viewerType === 'custom') {
     return <AndroidPdfPreview pdfUrl={pdfUrl} />;
   }
 

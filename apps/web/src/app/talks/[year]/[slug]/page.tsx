@@ -2,6 +2,7 @@ import { getTalks } from "@/lib/talks";
 import Link from "next/link";
 import { ArrowLeft, Download, Calendar, Tag, User, ExternalLink } from "lucide-react";
 import { notFound } from "next/navigation";
+import { PdfViewer } from "@/components/PdfViewer";
 
 export async function generateStaticParams() {
   const talks = getTalks();
@@ -123,31 +124,7 @@ export default async function TalkDetailsPage({ params }: { params: Promise<{ ye
           <div className="bg-[var(--color-gdg-grey-100)] dark:bg-[var(--color-gdg-grey-900)] p-3 border-b border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] flex justify-between items-center">
             <span className="text-sm font-medium text-muted">Präsentationsfolien</span>
           </div>
-          <iframe
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}#toolbar=1&navpanes=0&scrollbar=1`}
-            className="w-full flex-1 border-0 hidden md:block"
-            title="Präsentationsfolien Preview"
-          />
-          <div className="md:hidden flex-1 bg-white">
-            <object
-              data={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}#toolbar=1&navpanes=0&scrollbar=1`}
-              type="application/pdf"
-              className="w-full h-full border-0"
-              aria-label="Präsentationsfolien Mobile Preview"
-            >
-              <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[var(--color-gdg-grey-50)] dark:bg-[var(--color-gdg-grey-900)]">
-                <p className="mb-4 text-muted text-sm">Die mobile Vorschau wird von diesem Browser nicht unterstützt. Bitte öffne die PDF direkt:</p>
-                <a
-                  href={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--color-gdg-blue)] underline font-medium text-sm"
-                >
-                  PDF hier im Vollbild öffnen
-                </a>
-              </div>
-            </object>
-          </div>
+          <PdfViewer pdfUrl={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${encodeURI(talk.pdfPath)}`} />
         </div>
       ) : (
         <div className="mt-12 bg-card border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)] rounded-xl py-16 text-center text-muted">

@@ -21,11 +21,11 @@ export default function AndroidPdfPreview({ pdfUrl }: AndroidPdfPreviewProps) {
     const timer = setTimeout(() => {
       setWindowWidth(Math.min(window.innerWidth - 32, 600));
     }, 0);
-    
+
     const handleResize = () => {
       setWindowWidth(Math.min(window.innerWidth - 32, 600));
     };
-    
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -46,9 +46,6 @@ export default function AndroidPdfPreview({ pdfUrl }: AndroidPdfPreviewProps) {
   return (
     <div className="flex-1 flex flex-col items-center p-4 bg-[var(--color-gdg-grey-50)] dark:bg-[var(--color-gdg-grey-900)] overflow-y-auto h-full">
       <div className="w-full max-w-lg mx-auto flex flex-col items-center">
-        <p className="mb-6 text-center text-xs font-medium text-muted bg-white dark:bg-black px-3 py-1.5 rounded-full shadow-sm border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-800)]">
-          PDF-Vorschau
-        </p>
 
         {loading && (
           <div className="flex flex-col items-center justify-center py-12">
@@ -62,7 +59,7 @@ export default function AndroidPdfPreview({ pdfUrl }: AndroidPdfPreviewProps) {
             <p className="text-red-500 text-sm mb-4">Vorschau konnte nicht geladen werden.</p>
           </div>
         )}
-        
+
         <div className={loading || error ? "hidden" : "w-full"}>
           <Document
             file={pdfUrl}
@@ -91,7 +88,7 @@ export default function AndroidPdfPreview({ pdfUrl }: AndroidPdfPreviewProps) {
                 + {numPages - 3} weitere Seiten
               </p>
             )}
-            
+
             <a
               href={pdfUrl}
               target="_blank"
