@@ -177,7 +177,7 @@ function TalkCard({ talk, isPending }: { talk: TalkWithSlug, isPending: boolean 
           <h3 className="text-lg font-bold mb-1 leading-tight group-hover:text-[var(--color-gdg-blue)] transition-colors">{talk.title}</h3>
           <p className="text-sm text-muted mb-4">{talk.speaker}</p>
 
-          <div className="mt-auto">
+          <div className="mt-auto flex justify-between items-end gap-2">
             <div className="flex flex-wrap gap-1 mt-3">
               {talk.tags?.slice(0, 3).map(tag => (
                 <span key={tag} className="text-[10px] px-2 py-0.5 rounded border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-700)] bg-background text-muted">
@@ -187,6 +187,9 @@ function TalkCard({ talk, isPending }: { talk: TalkWithSlug, isPending: boolean 
               {talk.tags && talk.tags.length > 3 && (
                 <span className="text-[10px] px-2 py-0.5 rounded border border-[var(--color-gdg-grey-200)] dark:border-[var(--color-gdg-grey-700)] bg-background text-muted">+{talk.tags.length - 3}</span>
               )}
+            </div>
+            <div className="text-[10px] text-muted shrink-0">
+              {new Date(talk.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })}
             </div>
           </div>
         </div>
