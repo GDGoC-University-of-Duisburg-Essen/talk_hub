@@ -1,0 +1,14 @@
+{
+  "title": "Demystifying Large Language Models: How Transformers Actually Work",
+  "speaker": "Eman Elrefai",
+  "category": "AI",
+  "tags": [
+    "Transformer",
+    "AI"
+  ],
+  "language": "EN",
+  "level": "Anfänger",
+  "event": "GDG Official",
+  "date": "2026-08-18",
+  "description": "Entdecke, wie Large Language Models funktionieren, indem du sie Schritt für Schritt selbst entwickelst. Ausgehend von einem einfachen Bigram-Sprachmodell führen wir interaktiv und anhand anschaulicher Visualisierungen Konzepte wie Embeddings, neuronale Netzwerke, Self-Attention und die Transformer-Architektur ein. Am Ende des Workshops haben die Teilnehmenden ein klares Verständnis der grundlegenden Konzepte moderner LLMs und davon, wie diese trainiert werden.\r\n"
+}
