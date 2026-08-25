@@ -12,6 +12,7 @@ export default function AdminPage() {
   const [file, setFile] = useState<File | null>(null);
   const [date, setDate] = useState("");
   const [deletedPdf, setDeletedPdf] = useState(false);
+  const [slideLink, setSlideLink] = useState("");
 
   const [mode, setMode] = useState<'add' | 'edit'>('add');
   const [talks, setTalks] = useState<any[]>([]);
@@ -30,17 +31,19 @@ export default function AdminPage() {
     if (mode === 'edit' && selectedTalk) {
       setDate(selectedTalk.date || "");
       setDeletedPdf(false);
+      setSlideLink(selectedTalk.slideLink || "");
     } else if (mode === 'add') {
       setDate("");
       setSelectedTalk(null);
       setDeletedPdf(false);
+      setSlideLink("");
     }
   }, [mode, selectedTalk]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
-    onDrop: (acceptedFiles) => setFile(acceptedFiles[0]),
+    onDrop: (acceptedFiles) => { setFile(acceptedFiles[0]); setSlideLink(""); },
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -84,6 +87,7 @@ export default function AdminPage() {
       setFile(null);
       setDate("");
       setDeletedPdf(false);
+      setSlideLink("");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -243,8 +247,25 @@ export default function AdminPage() {
         </div>
 
         <div className="space-y-2">
+          <label className="text-sm font-semibold">Link zu Präsentationsfolien</label>
+          <p className="text-xs text-muted mb-1">Alternativ zum PDF-Hochladen: Externer Link zu den Folien (z.B. Google Drive, OneDrive).</p>
+          <input
+            name="slideLink"
+            type="url"
+            value={slideLink}
+            onChange={(e) => { setSlideLink(e.target.value); if (e.target.value) setFile(null); }}
+            placeholder="https://..."
+            className="w-full p-2.5 rounded-lg border border-[var(--color-gdg-grey-300)] outline-none transition-all focus:border-[var(--color-gdg-blue)]"
+          />
+        </div>
+
+        <div className="space-y-2">
           <label className="text-sm font-semibold">Präsentationsfolien (PDF)</label>
-          {mode === 'edit' && selectedTalk?.pdfFile && !deletedPdf ? (
+          {slideLink ? (
+            <div className="border-2 border-dashed rounded-xl p-8 text-center bg-[var(--color-gdg-grey-100)] dark:bg-[var(--color-gdg-grey-900)] opacity-60">
+              <p className="text-sm text-muted">PDF-Upload deaktiviert, da ein Link angegeben ist.</p>
+            </div>
+          ) : mode === 'edit' && selectedTalk?.pdfFile && !deletedPdf ? (
             <div className="border border-[var(--color-gdg-grey-300)] rounded-xl p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <FileText className="w-8 h-8 text-[var(--color-gdg-blue)]" />

@@ -62,6 +62,7 @@ export async function POST(req: Request) {
     const date = formData.get("date") as string;
     const description = formData.get("description") as string;
     const eventLink = formData.get("eventLink") as string;
+    const slideLink = formData.get("slideLink") as string;
     
     const originalSlug = formData.get("originalSlug") as string;
     const originalYear = formData.get("originalYear") as string;
@@ -85,7 +86,8 @@ export async function POST(req: Request) {
       event,
       date,
       description,
-      ...(eventLink && { eventLink })
+      ...(eventLink && { eventLink }),
+      ...(slideLink && { slideLink })
     };
 
     // Sanitize title for folder name
@@ -118,8 +120,8 @@ export async function POST(req: Request) {
       "utf-8"
     );
 
-    // Delete existing PDF if requested or if we are uploading a new one
-    if (deletePdf || file) {
+    // Delete existing PDF if requested, if we are uploading a new one, or if slideLink is set
+    if (deletePdf || file || slideLink) {
       try {
         const files = await fs.readdir(targetDir);
         const pdf = files.find((f: string) => f.endsWith('.pdf'));
@@ -131,8 +133,8 @@ export async function POST(req: Request) {
       }
     }
 
-    // Save PDF
-    if (file) {
+    // Save PDF (only if no slideLink is set — they are mutually exclusive)
+    if (file && !slideLink) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const pdfPath = path.join(targetDir, file.name);
